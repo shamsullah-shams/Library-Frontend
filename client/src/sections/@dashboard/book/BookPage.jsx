@@ -58,11 +58,15 @@ const BookPage = () => {
 
   const getAllBooks = () => {
     axios
-      .get(apiUrl(routes.BOOK))
+      .get(apiUrl(routes.BOOK), {
+        headers: {
+          Authorization: `Bearer ${tokens.access.token}`,
+        },
+      })
       .then((response) => {
         // handle success
         console.log(response.data);
-        setBooks(response.data.booksList);
+        setBooks(response.data.results);
         setIsTableLoading(false);
       })
       .catch((error) => {
@@ -209,19 +213,6 @@ const BookPage = () => {
               <Grid key={book._id} item xs={12} sm={6} md={4}>
                 <Card>
                   <Box sx={{ pt: '80%', position: 'relative' }}>
-                    <Label
-                      variant="filled"
-                      sx={{
-                        zIndex: 9,
-                        top: 16,
-                        left: 16,
-                        position: 'absolute',
-                        textTransform: 'uppercase',
-                        color: 'primary.main',
-                      }}
-                    >
-                      {book.genre.name}
-                    </Label>
                     {user.isAdmin && (
                       <Label
                         variant="filled"
@@ -250,26 +241,13 @@ const BookPage = () => {
                       </Label>
                     )}
 
-                    <StyledBookImage alt={book.name} src={book.photoUrl} />
+                    <StyledBookImage alt={book.name} src={`http://localhost:5000/images/${book.image}`} />
                   </Box>
 
                   <Stack spacing={1} sx={{ p: 2 }}>
                     <Typography textAlign="center" variant="h5" margin={0} noWrap>
                       {book.name}
                     </Typography>
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ color: '#888888' }}
-                      paddingBottom={1}
-                      noWrap
-                      textAlign="center"
-                    >
-                      {book.author.name}
-                    </Typography>
-                    <Label color={book.isAvailable ? 'success' : 'error'} sx={{ padding: 2 }}>
-                      {book.isAvailable ? 'Available' : 'Not available'}
-                    </Label>
-
                     <Typography variant="subtitle2" textAlign="center" paddingTop={1}>
                       ISBN: {book.isbn}
                     </Typography>
