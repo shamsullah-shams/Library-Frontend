@@ -44,13 +44,12 @@ export default function LoginPage() {
       toast.error('Please enter email and password');
     } else {
       axios
-        .post(`http://localhost:5000/api/auth/login`, { email, password }, { withCredentials: false })
+        .post(`http://localhost:5000/api/auth/login`, { email, password })
         .then((response) => {
           // handle success
           if (response.status === 200) {
-            console.log(response.data);
             toast.success(`Successfully logged in as ${response.data.user.name}`);
-            login(response.data.user);
+            login(response.data);
           }
         })
         .catch((error) => {

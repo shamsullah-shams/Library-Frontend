@@ -23,7 +23,17 @@ import toast from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import Iconify from '../../../components/iconify';
 
-const BookForm = ({ isUpdateForm, isModalOpen, handleCloseModal, book, setBook, handleAddBook, handleUpdateBook }) => {
+const BookForm = ({
+  isUpdateForm,
+  isModalOpen,
+  handleCloseModal,
+  book,
+  setBook,
+  handleAddBook,
+  handleUpdateBook,
+  setImage,
+  setPDF,
+}) => {
   const [isModalLoading, setIsModalLoading] = useState(true);
   const [authors, setAuthors] = useState([]);
   const [genres, setGenres] = useState([]);
@@ -112,52 +122,6 @@ const BookForm = ({ isUpdateForm, isModalOpen, handleCloseModal, book, setBook, 
                 onChange={(e) => setBook({ ...book, isbn: e.target.value })}
               />
 
-              <FormControl sx={{ m: 1 }}>
-                <InputLabel id="author-label">Author</InputLabel>
-                <Select
-                  labelId="author-label"
-                  id="author"
-                  value={book.authorId}
-                  label="Author"
-                  onChange={(e) => setBook({ ...book, authorId: e.target.value })}
-                >
-                  {authors.map((author) => (
-                    <MenuItem key={author._id} value={author._id}>
-                      {author.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="genre-label">Genre</InputLabel>
-                <Select
-                  labelId="genre-label"
-                  id="genre"
-                  value={book.genreId}
-                  label="Genre"
-                  onChange={(e) => setBook({ ...book, genreId: e.target.value })}
-                >
-                  {genres.map((genre) => (
-                    <MenuItem key={genre._id} value={genre._id}>
-                      {genre.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <FormControl>
-                <FormLabel id="available-label">Availability</FormLabel>
-                <RadioGroup
-                  aria-labelledby="available-label"
-                  defaultValue={book.isAvailable}
-                  name="radio-buttons-group"
-                  onChange={(e) => setBook({ ...book, isAvailable: e.target.value })}
-                >
-                  <FormControlLabel value control={<Radio />} label="Available" />
-                  <FormControlLabel value={false} control={<Radio />} label="Not available" />
-                </RadioGroup>
-              </FormControl>
-
               <TextField
                 name="summary"
                 label="Summary"
@@ -170,7 +134,26 @@ const BookForm = ({ isUpdateForm, isModalOpen, handleCloseModal, book, setBook, 
 
               <Button size="large" variant="outlined" component="label" color="info">
                 Upload photo
-                <input type="file" accept="image/jpeg, image/png" hidden />
+                <input
+                  type="file"
+                  accept="image/jpeg, image/png"
+                  hidden
+                  onChange={(event) => {
+                    setImage(event.target.files[0]);
+                  }}
+                />
+              </Button>
+
+              <Button size="large" variant="outlined" component="label" color="info">
+                Upload Book
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  hidden
+                  onChange={(event) => {
+                    setPDF(event.target.files[0]);
+                  }}
+                />
               </Button>
 
               <br />
@@ -212,6 +195,8 @@ BookForm.propTypes = {
   setBook: PropTypes.func,
   handleAddBook: PropTypes.func,
   handleUpdateBook: PropTypes.func,
+  setImage: PropTypes.func,
+  setPDF: PropTypes.func,
 };
 
 export default BookForm;

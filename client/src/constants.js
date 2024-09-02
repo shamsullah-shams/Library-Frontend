@@ -3,7 +3,7 @@ const backendApiUrl = 'http://localhost:5000/api';
 const routes = {
   AUTHOR: 'author',
   AUTH: 'auth',
-  BOOK: 'book',
+  BOOK: 'books',
   BORROWAL: 'borrowal',
   GENRE: 'genre',
   USER: 'user',
@@ -17,6 +17,6 @@ const methods = {
   DELETE: 'delete',
 };
 
-const apiUrl = (route, method, id = '') => `${backendApiUrl}/${route}/${method}${id && `/${id}`}`;
+const apiUrl = (route, id = '') => `${backendApiUrl}/${route}${id && `/${id}`}`;
 
 module.exports = { routes, methods, apiUrl };
