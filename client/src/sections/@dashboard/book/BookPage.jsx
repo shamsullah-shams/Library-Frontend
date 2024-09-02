@@ -51,8 +51,8 @@ const BookPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isUpdateForm, setIsUpdateForm] = useState(false);
-  const [pdf, setPDF] = useState('');
-  const [image, setImage] = useState('');
+  const [pdf, setPDF] = useState(null);
+  const [image, setImage] = useState(null);
 
   // API operations
 
@@ -65,13 +65,12 @@ const BookPage = () => {
       })
       .then((response) => {
         // handle success
-        console.log(response.data);
         setBooks(response.data.results);
         setIsTableLoading(false);
       })
       .catch((error) => {
         // handle error
-        console.log(error);
+        toast.error(error.message || 'Something went wrong, please try again');
       });
   };
 
@@ -92,58 +91,76 @@ const BookPage = () => {
       })
       .then((response) => {
         toast.success('Book added');
-        console.log(response.data);
         handleCloseModal();
         getAllBooks();
         clearForm();
       })
       .catch((error) => {
-        console.log(error);
-        toast.error('Something went wrong, please try again');
+        toast.error(error.message || 'Something went wrong, please try again');
       });
   };
 
   const updateBook = () => {
+    const formdata = new FormData();
+    formdata.append('name', book.name);
+    formdata.append('isbn', book.isbn);
+    formdata.append('summary', book.summary);
+
+    if (image) {
+      formdata.append('image', image);
+    }
+
+    if (pdf) {
+      formdata.append('pdf', pdf);
+    }
+
     axios
-      .put(apiUrl(routes.BOOK, selectedBookId), book)
+      .patch(apiUrl(routes.BOOK, selectedBookId), formdata, {
+        headers: {
+          Authorization: `Bearer ${tokens.access.token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then((response) => {
         toast.success('Book updated');
-        console.log(response.data);
+
         handleCloseModal();
         handleCloseMenu();
         getAllBooks();
         clearForm();
       })
       .catch((error) => {
-        console.log(error);
-        toast.error('Something went wrong, please try again');
+        toast.error(error.response.data.message || 'Something went wrong, please try again');
       });
   };
 
   const deleteBook = (bookId) => {
     axios
-      .delete(apiUrl(routes.BOOK, methods.DELETE, bookId))
+      .delete(apiUrl(routes.BOOK, selectedBookId), {
+        headers: {
+          Authorization: `Bearer ${tokens.access.token}`,
+        },
+      })
       .then((response) => {
         toast.success('Book deleted');
         handleCloseDialog();
         handleCloseMenu();
-        console.log(response.data);
         getAllBooks();
       })
       .catch((error) => {
-        console.log(error);
-        toast.error('Something went wrong, please try again');
+        toast.error(error.response.data.message || 'Something went wrong, please try again');
       });
   };
 
   const getSelectedBookDetails = () => {
-    const selectedBook = books.find((element) => element._id === selectedBookId);
-    console.log(selectedBook);
+    const selectedBook = books.find((element) => element.id === selectedBookId);
     setBook(selectedBook);
   };
 
   const clearForm = () => {
-    setBook({ id: '', name: '', isbn: '', summary: '', isAvailable: true, authorId: '', genreId: '', photoUrl: '' });
+    setBook({ name: '', isbn: '', summary: '' });
+    setImage(null);
+    setPDF(null);
   };
 
   // Handler functions
@@ -232,7 +249,7 @@ const BookPage = () => {
                           size="small"
                           color="primary"
                           onClick={(e) => {
-                            setSelectedBookId(book._id);
+                            setSelectedBookId(book.id);
                             handleOpenMenu(e);
                           }}
                         >
