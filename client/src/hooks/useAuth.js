@@ -13,11 +13,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (data) => {
     setUser(data?.user);
     setTokens(data?.tokens);
-    if (data?.user?.isAdmin) {
-      navigate('/dashboard', { replace: true });
-    } else {
-      navigate('/books', { replace: true });
-    }
+    navigate('/books', { replace: true });
   };
 
   const logout = () => {

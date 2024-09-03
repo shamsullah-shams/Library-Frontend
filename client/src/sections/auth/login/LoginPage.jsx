@@ -33,9 +33,6 @@ export default function LoginPage() {
   const { login, user } = useAuth();
 
   if (user) {
-    if (user.isAdmin) {
-      return <Navigate to={'/dashboard'} replace />;
-    }
     return <Navigate to={'/books'} replace />;
   }
 
