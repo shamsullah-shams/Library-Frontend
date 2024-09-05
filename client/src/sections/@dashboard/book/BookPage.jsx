@@ -12,6 +12,7 @@ import {
   Grid,
   IconButton,
   MenuItem,
+  Pagination,
   Popover,
   Stack,
   Typography,
@@ -225,8 +226,6 @@ const BookPage = () => {
     getAllBooks();
   }, []);
 
-  const [openFilter, setOpenFilter] = useState(false);
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -336,6 +335,17 @@ const BookPage = () => {
             No books found
           </Alert>
         )}
+        <Grid
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginTop: '50px',
+            marginBottom: '50px',
+          }}
+        >
+          <Pagination count={10} color="primary" />
+        </Grid>
       </Container>
 
       <Popover

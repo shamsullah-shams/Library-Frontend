@@ -1,12 +1,11 @@
-import PropTypes from "prop-types";
-import { forwardRef } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { Box, Link } from "@mui/material";
+import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Box, Link } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const Logo = forwardRef(({disabledLink = false, sx, ...other}, ref) => {
-
+const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
   const logo = (
     <Box
       ref={ref}
@@ -20,7 +19,7 @@ const Logo = forwardRef(({disabledLink = false, sx, ...other}, ref) => {
       }}
       {...other}
     >
-      <img src="./assets/libraryLogo.svg" alt="Logo" width="80%"/>
+      <img src="./assets/libraryLogo.png" alt="Logo" width="130px" />
     </Box>
   );
 
@@ -29,7 +28,7 @@ const Logo = forwardRef(({disabledLink = false, sx, ...other}, ref) => {
   }
 
   return (
-    <Link to="/" component={RouterLink} sx={{display: 'contents'}}>
+    <Link to="/" component={RouterLink} sx={{ display: 'contents' }}>
       {logo}
     </Link>
   );
