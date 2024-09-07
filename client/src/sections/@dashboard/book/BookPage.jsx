@@ -87,11 +87,12 @@ const BookPage = () => {
   });
   const [books, setBooks] = useState([]);
   const [selectedBookId, setSelectedBookId] = useState(null);
-  const [isTableLoading, setIsTableLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isUpdateForm, setIsUpdateForm] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const [pdf, setPDF] = useState(null);
   const [image, setImage] = useState(null);
 
@@ -107,7 +108,7 @@ const BookPage = () => {
       .then((response) => {
         // handle success
         setBooks(response.data.results);
-        setIsTableLoading(false);
+        setLoading(false);
       })
       .catch((error) => {
         // handle error
@@ -234,6 +235,23 @@ const BookPage = () => {
     setIsModalOpen(false);
   };
 
+  const handleKeyPress = async (event) => {
+    const name = event.target.value;
+    if (event.key === 'Enter') {
+      setLoading(true);
+      try {
+        const response = await axios.get(apiUrl(routes.BOOK), {
+          params: { name },
+        });
+        setLoading(false);
+        setBooks(response.data.results);
+      } catch (error) {
+        setLoading(false);
+        toast.error(error.message || 'Something went wrong, please try again');
+      }
+    }
+  };
+
   const previewBook = () => {
     const selectedBook = books.find((element) => element.id === selectedBookId);
     if (selectedBook) {
@@ -272,11 +290,18 @@ const BookPage = () => {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} style={{ width: '100%' }} />
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+              style={{ width: '100%' }}
+              value={searchValue}
+              onChange={(event) => setSearchValue(event.target.value)}
+              onKeyDown={handleKeyPress}
+            />
           </Search>
         </Container>
 
-        {isTableLoading ? (
+        {loading ? (
           <Grid padding={2} style={{ textAlign: 'center' }}>
             <CircularProgress />
           </Grid>
