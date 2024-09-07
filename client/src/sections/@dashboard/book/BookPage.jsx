@@ -93,6 +93,9 @@ const BookPage = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isUpdateForm, setIsUpdateForm] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [pdf, setPDF] = useState(null);
   const [image, setImage] = useState(null);
 
@@ -107,11 +110,14 @@ const BookPage = () => {
       })
       .then((response) => {
         // handle success
-        setBooks(response.data.results);
+        const data = response.data;
+        setBooks(data.results);
+        setTotalPages(data.totalPages);
         setLoading(false);
       })
       .catch((error) => {
         // handle error
+        setLoading(false);
         toast.error(error.message || 'Something went wrong, please try again');
       });
   };
@@ -243,8 +249,10 @@ const BookPage = () => {
         const response = await axios.get(apiUrl(routes.BOOK), {
           params: { name },
         });
+        const data = response.data;
+        setBooks(data.results);
+        setTotalPages(data.totalPages);
         setLoading(false);
-        setBooks(response.data.results);
       } catch (error) {
         setLoading(false);
         toast.error(error.message || 'Something went wrong, please try again');
@@ -259,6 +267,10 @@ const BookPage = () => {
     } else {
       alert('something went wrong');
     }
+  };
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
   };
 
   return (
@@ -369,7 +381,7 @@ const BookPage = () => {
             marginBottom: '50px',
           }}
         >
-          <Pagination count={10} color="primary" />
+          <Pagination count={totalPages} page={page} color="primary" onChange={handlePageChange} />
         </Grid>
       </Container>
 
