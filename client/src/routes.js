@@ -6,6 +6,7 @@ import BorrowalPage from './sections/@dashboard/borrowal/BorrowalPage';
 import BookPage from './sections/@dashboard/book/BookPage';
 import UsersPage from './sections/@dashboard/user/UserPage';
 import { useAuth } from './hooks/useAuth';
+import BookPage2 from './sections/@dashboard/gBooks';
 
 // ----------------------------------------------------------------------
 
@@ -61,6 +62,10 @@ export default function Router() {
 
   const guestRoutes = useRoutes([
     {
+      path: 'student/books',
+      element: <BookPage2 />,
+    },
+    {
       path: 'login',
       element: <LoginPage />,
     },
@@ -70,7 +75,7 @@ export default function Router() {
     },
     {
       path: '*',
-      element: <Navigate to="/login" replace />,
+      element: <Navigate to="/student/books" replace />,
     },
   ]);
 

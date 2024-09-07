@@ -1,26 +1,5 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Radio,
-  RadioGroup,
-  Select,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Container, Modal, Stack, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import toast from 'react-hot-toast';
-import { useEffect, useState } from 'react';
 import Iconify from '../../../components/iconify';
 
 const BookForm = ({
@@ -34,47 +13,6 @@ const BookForm = ({
   setImage,
   setPDF,
 }) => {
-  const [isModalLoading, setIsModalLoading] = useState(true);
-  const [authors, setAuthors] = useState([]);
-  const [genres, setGenres] = useState([]);
-
-  const getAllAuthors = () => {
-    axios
-      .get('http://localhost:8080/api/author/getAll')
-      .then((response) => {
-        // handle success
-        console.log(response.data);
-        setAuthors(response.data.authorsList);
-      })
-      .catch((error) => {
-        // handle error
-        toast.error('Error fetching authors');
-        console.log(error);
-      });
-  };
-
-  const getAllGenres = () => {
-    axios
-      .get('http://localhost:8080/api/genre/getAll')
-      .then((response) => {
-        // handle success
-        console.log(response.data);
-        setGenres(response.data.genresList);
-        setIsModalLoading(false);
-      })
-      .catch((error) => {
-        // handle error
-        toast.error('Error fetching genres');
-        console.log(error);
-      });
-  };
-
-  // Load data on initial page load
-  useEffect(() => {
-    getAllAuthors();
-    getAllGenres();
-  }, []);
-
   const style = {
     position: 'absolute',
     top: '50%',
@@ -100,87 +38,81 @@ const BookForm = ({
             {isUpdateForm ? <span>Update</span> : <span>Add</span>} book
           </Typography>
 
-          {isModalLoading ? (
-            <Grid padding={4} style={{ textAlign: 'center' }}>
-              <CircularProgress />
-            </Grid>
-          ) : (
-            <Stack spacing={3} paddingY={2} paddingX={3} height="600px" overflow="scroll">
-              <TextField
-                name="name"
-                label="Book name"
-                value={book.name}
-                autoFocus
-                required
-                onChange={(e) => setBook({ ...book, name: e.target.value })}
-              />
-              <TextField
-                name="isbn"
-                label="ISBN"
-                value={book.isbn}
-                required
-                onChange={(e) => setBook({ ...book, isbn: e.target.value })}
-              />
+          <Stack spacing={3} paddingY={2} paddingX={3} height="600px" overflow="scroll">
+            <TextField
+              name="name"
+              label="Book name"
+              value={book.name}
+              autoFocus
+              required
+              onChange={(e) => setBook({ ...book, name: e.target.value })}
+            />
+            <TextField
+              name="isbn"
+              label="ISBN"
+              value={book.isbn}
+              required
+              onChange={(e) => setBook({ ...book, isbn: e.target.value })}
+            />
 
-              <TextField
-                name="summary"
-                label="Summary"
-                value={book.summary}
-                multiline
-                rows={2}
-                maxRows={4}
-                onChange={(e) => setBook({ ...book, summary: e.target.value })}
-              />
+            <TextField
+              name="summary"
+              label="Summary"
+              value={book.summary}
+              multiline
+              rows={2}
+              maxRows={4}
+              onChange={(e) => setBook({ ...book, summary: e.target.value })}
+            />
 
-              <Button size="large" variant="outlined" component="label" color="info">
-                Upload photo
-                <input
-                  type="file"
-                  accept="image/jpeg, image/png"
-                  hidden
-                  onChange={(event) => {
-                    setImage(event.target.files[0]);
-                  }}
-                />
+            <Button size="large" variant="outlined" component="label" color="info">
+              Upload photo
+              <input
+                type="file"
+                accept="image/jpeg, image/png"
+                hidden
+                onChange={(event) => {
+                  setImage(event.target.files[0]);
+                }}
+              />
+            </Button>
+
+            <Button size="large" variant="outlined" component="label" color="info">
+              Upload Book
+              <input
+                type="file"
+                accept="application/pdf"
+                hidden
+                onChange={(event) => {
+                  setPDF(event.target.files[0]);
+                }}
+              />
+            </Button>
+
+            <br />
+            <Box textAlign="center" paddingBottom={2}>
+              <Button
+                size="large"
+                variant="contained"
+                onClick={isUpdateForm ? handleUpdateBook : handleAddBook}
+                startIcon={<Iconify icon="bi:check-lg" />}
+                style={{ marginRight: '12px' }}
+              >
+                Submit
               </Button>
 
-              <Button size="large" variant="outlined" component="label" color="info">
-                Upload Book
-                <input
-                  type="file"
-                  accept="application/pdf"
-                  hidden
-                  onChange={(event) => {
-                    setPDF(event.target.files[0]);
-                  }}
-                />
+              <Button
+                size="large"
+                color="inherit"
+                variant="contained"
+                onClick={handleCloseModal}
+                startIcon={<Iconify icon="charm:cross" />}
+                style={{ marginLeft: '12px' }}
+              >
+                Cancel
               </Button>
-
-              <br />
-              <Box textAlign="center" paddingBottom={2}>
-                <Button
-                  size="large"
-                  variant="contained"
-                  onClick={isUpdateForm ? handleUpdateBook : handleAddBook}
-                  startIcon={<Iconify icon="bi:check-lg" />}
-                  style={{ marginRight: '12px' }}
-                >
-                  Submit
-                </Button>
-
-                <Button
-                  size="large"
-                  color="inherit"
-                  variant="contained"
-                  onClick={handleCloseModal}
-                  startIcon={<Iconify icon="charm:cross" />}
-                  style={{ marginLeft: '12px' }}
-                >
-                  Cancel
-                </Button>
-              </Box>
-            </Stack>
-          )}
+            </Box>
+          </Stack>
         </Container>
       </Box>
     </Modal>

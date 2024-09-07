@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { IconButton, InputAdornment, Stack, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
@@ -10,6 +11,8 @@ const LoginForm = ({ loginUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -58,6 +61,16 @@ const LoginForm = ({ loginUser }) => {
         onClick={() => loginUser(email, password)}
       >
         Login
+      </LoadingButton>
+      <LoadingButton
+        sx={{ mt: 4 }}
+        fullWidth
+        size="large"
+        type="submit"
+        variant="outlined"
+        onClick={() => navigate('/student/books')}
+      >
+        Browse Book
       </LoadingButton>
     </>
   );
