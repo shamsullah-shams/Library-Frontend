@@ -5,25 +5,20 @@ import axios from 'axios';
 import { useAuth } from '../../../hooks/useAuth';
 
 export default function AccountPopover() {
-  const { user } = useAuth();
+  const { user, tokens } = useAuth();
   const { logout } = useAuth();
   const [open, setOpen] = useState(null);
 
   const logoutUser = () => {
     handleClose();
     axios
-      .post(`http://10.10.12.45:5000/api/auth/logout`)
+      .post(`http://10.10.12.45:5000/api/auth/logout`, { refreshToken: tokens.refresh.token })
       .then((response) => {
-        // handle success
-        if (response.status === 200) {
-          console.log(response.data);
-          logout();
-        }
+        logout();
       })
       .catch((error) => {
         // handle error
         alert(error);
-        console.log(error);
       });
   };
 
