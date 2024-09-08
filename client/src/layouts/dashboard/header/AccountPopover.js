@@ -12,7 +12,7 @@ export default function AccountPopover() {
   const logoutUser = () => {
     handleClose();
     axios
-      .post(`http://localhost:5000/api/auth/logout`)
+      .post(`http://10.10.12.45:5000/api/auth/logout`)
       .then((response) => {
         // handle success
         if (response.status === 200) {

@@ -34,7 +34,7 @@ const BorrowalForm = ({
 
   const getAllMembers = () => {
     axios
-      .get('http://localhost:8080/api/user/getAllMembers')
+      .get('http://10.10.12.45:8080/api/user/getAllMembers')
       .then((response) => {
         // handle success
         console.log(response.data);
@@ -54,7 +54,7 @@ const BorrowalForm = ({
 
   const getAllBooks = () => {
     axios
-      .get('http://localhost:8080/api/books')
+      .get('http://10.10.12.45:8080/api/books')
       .then((response) => {
         // handle success
         console.log(response.data);

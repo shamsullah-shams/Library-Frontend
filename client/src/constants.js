@@ -1,4 +1,4 @@
-const backendApiUrl = 'http://localhost:5000/api';
+const backendApiUrl = 'http://10.10.12.45:5000/api';
 
 const routes = {
   AUTHOR: 'author',
@@ -6,7 +6,7 @@ const routes = {
   BOOK: 'books',
   BORROWAL: 'borrowal',
   GENRE: 'genre',
-  USER: 'user',
+  USER: 'users',
   IMAGES: 'images',
 };
 

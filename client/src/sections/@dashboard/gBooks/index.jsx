@@ -138,7 +138,7 @@ const BookPage = () => {
   const previewBook = () => {
     const selectedBook = books.find((element) => element.id === selectedBookId);
     if (selectedBook) {
-      window.open(`http://localhost:5000/images/${selectedBook?.pdf}`, '_blank');
+      window.open(`http://10.10.12.45:5000/images/${selectedBook?.pdf}`, '_blank');
     } else {
       alert('something went wrong');
     }
@@ -217,7 +217,7 @@ const BookPage = () => {
                       </IconButton>
                     </Label>
 
-                    <StyledBookImage alt={book.name} src={`http://localhost:5000/images/${book.image}`} />
+                    <StyledBookImage alt={book.name} src={`http://10.10.12.45:5000/images/${book.image}`} />
                   </Box>
 
                   <Stack spacing={1} sx={{ p: 2 }}>
