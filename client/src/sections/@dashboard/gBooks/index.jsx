@@ -87,18 +87,32 @@ const BookPage = () => {
   const handleKeyPress = async (event) => {
     const name = event.target.value;
     if (event.key === 'Enter') {
-      setLoading(true);
-      try {
-        const response = await axios.get(apiUrl(routes.BOOK), {
-          params: { name },
-        });
-        const data = response.data;
-        setBooks(data.results);
-        setTotalPages(data.totalPages);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        toast.error(error.message || 'Something went wrong, please try again');
+      if (name === '') {
+        setLoading(true);
+        try {
+          const response = await axios.get(apiUrl(routes.BOOK));
+          const data = response.data;
+          setBooks(data.results);
+          setTotalPages(data.totalPages);
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          toast.error(error.message || 'Something went wrong, please try again');
+        }
+      } else {
+        setLoading(true);
+        try {
+          const response = await axios.get(apiUrl(routes.BOOK), {
+            params: { name },
+          });
+          const data = response.data;
+          setBooks(data.results);
+          setTotalPages(data.totalPages);
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          toast.error(error.message || 'Something went wrong, please try again');
+        }
       }
     }
   };
@@ -145,7 +159,29 @@ const BookPage = () => {
   };
 
   const handlePageChange = (event, value) => {
-    setPage(value);
+    setLoading(true);
+
+    axios
+      .get(apiUrl(routes.BOOK), {
+        params: {
+          page: value, // Send the page number as a query parameter
+        },
+      })
+      .then((response) => {
+        // handle success
+        const data = response.data;
+        setBooks(data.results);
+        setTotalPages(data.totalPages);
+        setLoading(false);
+      })
+      .catch((error) => {
+        // handle error
+        toast.error(error.response.data.message || 'Something went wrong, please try again');
+        setLoading(false); // Ensure loading state is reset on error
+      });
+
+    setLoading(false);
+    setPage(value); // Update the current page state
   };
 
   return (
