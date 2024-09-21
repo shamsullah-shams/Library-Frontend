@@ -1,4 +1,4 @@
-import { FiBookOpen, FiCheckCircle, FiUsers, FiBarChart2 } from 'react-icons/fi';
+import { FiBookOpen, FiCheckCircle, FiUsers, FiDownloadCloud } from 'react-icons/fi';
 
 const navConfig = [
   {
@@ -15,6 +15,11 @@ const navConfig = [
     title: 'Users',
     path: '/users',
     icon: <FiUsers />,
+  },
+  {
+    title: 'Backup',
+    path: '/backup',
+    icon: <FiDownloadCloud />,
   },
 ];
 
