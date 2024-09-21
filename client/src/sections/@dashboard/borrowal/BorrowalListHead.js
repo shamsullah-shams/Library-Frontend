@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 // @mui
-import {Box, TableCell, TableHead, TableRow, TableSortLabel} from '@mui/material';
+import { Box, TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -23,12 +23,7 @@ BorrowalListHead.propTypes = {
   onRequestSort: PropTypes.func,
 };
 
-export default function BorrowalListHead({
-                                           order,
-                                           orderBy,
-                                           headLabel,
-                                           onRequestSort,
-                                         }) {
+export default function BorrowalListHead({ order, orderBy, headLabel, onRequestSort }) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -50,7 +45,7 @@ export default function BorrowalListHead({
             >
               {headCell.label}
               {orderBy === headCell.id ? (
-                <Box sx={{...visuallyHidden}}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</Box>
+                <Box sx={{ ...visuallyHidden }}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</Box>
               ) : null}
             </TableSortLabel>
           </TableCell>

@@ -1,21 +1,5 @@
-import {
-  Box,
-  Button,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Select,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Container, Grid, Modal, Stack, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import toast from 'react-hot-toast';
-import { useEffect, useState } from 'react';
 import Iconify from '../../../components/iconify';
 import { useAuth } from '../../../hooks/useAuth';
 
@@ -25,54 +9,12 @@ const BorrowalForm = ({
   isUpdateForm,
   isModalOpen,
   handleCloseModal,
-  borrowal,
   setBorrowal,
+  borrowal,
 }) => {
-  const { user } = useAuth();
-  const [members, setMembers] = useState([]);
-  const [books, setBooks] = useState([]);
+  const { user, tokens } = useAuth();
 
-  const getAllMembers = () => {
-    axios
-      .get('http://10.10.12.45:8080/api/user/getAllMembers')
-      .then((response) => {
-        // handle success
-        console.log(response.data);
-        if (user.isAdmin) {
-          setMembers(response.data.membersList);
-        } else {
-          setMembers(response.data.membersList.filter((member) => user._id === member._id));
-        }
-        setBorrowal({ ...borrowal, memberId: user._id });
-      })
-      .catch((error) => {
-        // handle error
-        toast.error('Error fetching members');
-        console.log(error);
-      });
-  };
-
-  const getAllBooks = () => {
-    axios
-      .get('http://10.10.12.45:8080/api/books')
-      .then((response) => {
-        // handle success
-        console.log(response.data);
-        setBooks(response.data.booksList);
-      })
-      .catch((error) => {
-        // handle error
-        toast.error('Error fetching books');
-        console.log(error);
-      });
-  };
-
-  // Load data on initial page load
-  useEffect(() => {
-    getAllMembers();
-    getAllBooks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  console.log({ 'borrowal from model': borrowal });
 
   const style = {
     position: 'absolute',
@@ -101,83 +43,52 @@ const BorrowalForm = ({
           <Stack spacing={3} paddingY={2}>
             <Grid container spacing={0} sx={{ paddingBottom: '4px' }}>
               <Grid item xs={12} md={6} paddingRight={1}>
-                <FormControl sx={{ m: 0 }} fullWidth>
-                  <InputLabel id="member-label">Member</InputLabel>
-                  <Select
-                    required
-                    disabled={!user.isAdmin}
-                    labelId="member-label"
-                    id="member"
-                    value={borrowal.memberId}
-                    label="Member"
-                    onChange={(e) => setBorrowal({ ...borrowal, memberId: e.target.value })}
-                  >
-                    {members.map((member) => (
-                      <MenuItem key={member._id} value={member._id}>
-                        {member.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <TextField
+                  fullWidth
+                  name="bookName"
+                  label="Book Name"
+                  type="text"
+                  required
+                  value={borrowal.bookName}
+                  onChange={(event) => setBorrowal({ ...borrowal, bookName: event.target.value })}
+                />
               </Grid>
               <Grid item xs={12} md={6} paddingLeft={1}>
-                <FormControl sx={{ m: 0 }} fullWidth>
-                  <InputLabel id="author-label">Book</InputLabel>
-                  <Select
-                    required
-                    labelId="book-label"
-                    id="book"
-                    value={borrowal.bookId}
-                    label="Book"
-                    onChange={(e) => setBorrowal({ ...borrowal, bookId: e.target.value })}
-                  >
-                    {books
-                      .filter((book) => book.isAvailable)
-                      .map((book) => (
-                        <MenuItem key={book._id} value={book._id}>
-                          {book.name}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
+                <TextField
+                  fullWidth
+                  name="studentName"
+                  label="Student Name"
+                  type="text"
+                  required
+                  value={borrowal.studentName}
+                  onChange={(event) => setBorrowal({ ...borrowal, studentName: event.target.value })}
+                />
               </Grid>
             </Grid>
-
             <Grid container spacing={0} sx={{ paddingBottom: '4px' }}>
               <Grid item xs={12} md={6} paddingRight={1}>
                 <TextField
                   fullWidth
-                  name="borrowedDate"
-                  label="Borrowed date"
-                  type="date"
-                  value={borrowal.borrowedDate}
+                  name="faculty"
+                  label="faculty"
+                  type="text"
                   required
-                  InputLabelProps={{ shrink: true }}
-                  onChange={(e) => setBorrowal({ ...borrowal, borrowedDate: e.target.value })}
+                  value={borrowal.faculty}
+                  onChange={(event) => setBorrowal({ ...borrowal, faculty: event.target.value })}
                 />
               </Grid>
               <Grid item xs={12} md={6} paddingLeft={1}>
                 <TextField
                   fullWidth
-                  name="dueDate"
-                  label="Due date"
-                  type="date"
-                  value={borrowal.dueDate}
+                  name="semester"
+                  label="Semester"
+                  type="text"
                   required
-                  InputLabelProps={{ shrink: true }}
-                  onChange={(e) => setBorrowal({ ...borrowal, dueDate: e.target.value })}
+                  value={borrowal.semester}
+                  onChange={(event) => setBorrowal({ ...borrowal, semester: event.target.value })}
                 />
               </Grid>
             </Grid>
-
-            <TextField
-              fullWidth
-              name="status"
-              label="Status"
-              type="text"
-              value={borrowal.status}
-              onChange={(e) => setBorrowal({ ...borrowal, status: e.target.value })}
-            />
 
             <br />
             <Box textAlign="center">
@@ -215,8 +126,6 @@ BorrowalForm.propTypes = {
   isUpdateForm: PropTypes.bool,
   isModalOpen: PropTypes.bool,
   handleCloseModal: PropTypes.func,
-  borrowal: PropTypes.object,
-  setBorrowal: PropTypes.func,
   handleAddBorrowal: PropTypes.func,
   handleUpdateBorrowal: PropTypes.func,
 };
