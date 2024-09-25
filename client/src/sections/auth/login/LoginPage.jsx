@@ -41,7 +41,7 @@ export default function LoginPage() {
       toast.error('Please enter email and password');
     } else {
       axios
-        .post(`http://10.10.12.45:5000/api/auth/login`, { email, password })
+        .post(`http://localhost:5000/api/auth/login`, { email, password })
         .then((response) => {
           // handle success
           if (response.status === 200) {
