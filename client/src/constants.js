@@ -7,6 +7,7 @@ const routes = {
   BORROWAL: 'borrowals',
   USER: 'users',
   IMAGES: 'images',
+  CATEGORY: 'categories',
 };
 
 const methods = {
