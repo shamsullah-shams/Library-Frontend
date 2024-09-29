@@ -10,7 +10,13 @@ export const fetchCategories = () => {
           'Content-Type': 'application/json',
         },
       });
-      dispatch(categoryActions.setCategories(response.data));
+      const data = response.data.map((item) => {
+        return {
+          ...item,
+          path: `category/${item.id}`,
+        };
+      });
+      dispatch(categoryActions.setCategories(data));
     } catch (error) {
       console.log(error);
     }

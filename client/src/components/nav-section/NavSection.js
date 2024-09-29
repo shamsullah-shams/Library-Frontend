@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import PropTypes from 'prop-types';
+import { MdCategory } from 'react-icons/md';
 import { NavLink as RouterLink } from 'react-router-dom';
-import { Box, Button, List, ListItemButton, ListItemText } from '@mui/material';
+import { Box, List, ListItemButton, ListItemText } from '@mui/material';
 import { StyledNavItem, StyledNavItemIcon } from './styles';
-
 // ----------------------------------------------------------------------
 
 NavSection.propTypes = {
@@ -83,8 +83,7 @@ const InnerNavItem = ({ item }) => {
       }}
       style={{ marginLeft: '40px' }}
     >
-      <StyledNavItemIcon>{icon && icon}</StyledNavItemIcon>
-
+      <MdCategory size={20} style={{ marginRight: '10px' }} />
       <ListItemText disableTypography primary={title} />
 
       {info && info}

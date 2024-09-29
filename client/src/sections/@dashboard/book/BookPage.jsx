@@ -17,6 +17,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import { Alert } from '@mui/lab';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -79,6 +80,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const BookPage = () => {
   const { user, tokens } = useAuth();
+
+  const { categoryId } = useParams();
+
   // Data
   const [book, setBook] = useState({
     name: '',
@@ -103,11 +107,15 @@ const BookPage = () => {
 
   const getAllBooks = () => {
     axios
-      .get(apiUrl(routes.BOOK), {
-        headers: {
-          Authorization: `Bearer ${tokens.access.token}`,
-        },
-      })
+      .get(
+        apiUrl(routes.BOOK),
+        { params: { categoryId } },
+        {
+          headers: {
+            Authorization: `Bearer ${tokens.access.token}`,
+          },
+        }
+      )
       .then((response) => {
         // handle success
         const data = response.data;
@@ -231,7 +239,7 @@ const BookPage = () => {
   // Load data on initial page load
   useEffect(() => {
     getAllBooks();
-  }, []);
+  }, [categoryId]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);

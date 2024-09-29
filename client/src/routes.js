@@ -13,30 +13,6 @@ import Backup from './sections/@dashboard/backup/BackupPage';
 
 export default function Router() {
   const { user } = useAuth();
-  const adminRoutes = useRoutes([
-    {
-      path: '/',
-      element: <LibraryApp />,
-      children: [
-        { path: 'books', element: <BookPage /> },
-        { path: 'borrowals', element: <BorrowalPage /> },
-        { path: 'users', element: <UsersPage /> },
-        { path: 'backup', element: <Backup /> },
-      ],
-    },
-    {
-      path: 'login',
-      element: <LoginPage />,
-    },
-    {
-      path: '404',
-      element: <Page404 />,
-    },
-    {
-      path: '*',
-      element: <Navigate to="/404" replace />,
-    },
-  ]);
 
   const memberRoutes = useRoutes([
     {
@@ -46,6 +22,10 @@ export default function Router() {
         { element: <Navigate to="/books" />, index: true },
         { path: 'books', element: <BookPage /> },
         { path: 'borrowals', element: <BorrowalPage /> },
+        { path: 'category/:categoryId', element: <BookPage /> },
+        { path: 'borrowals', element: <BorrowalPage /> },
+        { path: 'users', element: <UsersPage /> },
+        { path: 'backup', element: <Backup /> },
       ],
     },
     {
@@ -82,9 +62,6 @@ export default function Router() {
   ]);
 
   if (user) {
-    if (user.isAdmin) {
-      return adminRoutes;
-    }
     return memberRoutes;
   }
   return guestRoutes;

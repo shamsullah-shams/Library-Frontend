@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
 import { Avatar, Box, Drawer, Link, Typography } from '@mui/material';
@@ -37,6 +38,8 @@ Nav.propTypes = {
 export default function Nav({ openNav, onCloseNav }) {
   const { user } = useAuth();
   const [collapse, setCollapse] = useState(false);
+
+  const categories = useSelector((state) => state.categories.categories);
 
   const { pathname } = useLocation();
 
@@ -78,7 +81,7 @@ export default function Nav({ openNav, onCloseNav }) {
         </Link>
       </Box>
 
-      <NavSection data={navConfig} innerData={innerConfig} collapse={collapse} setCollapse={setCollapse} />
+      <NavSection data={navConfig} innerData={categories} collapse={collapse} setCollapse={setCollapse} />
 
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
