@@ -88,6 +88,8 @@ const BookPage = () => {
     name: '',
     isbn: '',
     summary: '',
+    categoryId: '',
+    categoryName: '',
   });
   const [books, setBooks] = useState([]);
   const [selectedBookId, setSelectedBookId] = useState(null);
@@ -135,6 +137,7 @@ const BookPage = () => {
     formdata.append('name', book.name);
     formdata.append('isbn', book.isbn);
     formdata.append('summary', book.summary);
+    formdata.append('categoryId', book.categoryId);
     formdata.append('image', image);
     formdata.append('pdf', pdf);
 
@@ -179,7 +182,6 @@ const BookPage = () => {
       })
       .then((response) => {
         toast.success('Book updated');
-
         handleCloseModal();
         handleCloseMenu();
         getAllBooks();
@@ -255,7 +257,7 @@ const BookPage = () => {
       if (name === '') {
         setLoading(true);
         try {
-          const response = await axios.get(apiUrl(routes.BOOK));
+          const response = await axios.get(apiUrl(routes.BOOK), { params: { categoryId } });
           const data = response.data;
           setBooks(data.results);
           setTotalPages(data.totalPages);
@@ -297,7 +299,8 @@ const BookPage = () => {
     axios
       .get(apiUrl(routes.BOOK), {
         params: {
-          page: value, // Send the page number as a query parameter
+          page: value,
+          categoryId,
         },
       })
       .then((response) => {
@@ -425,7 +428,7 @@ const BookPage = () => {
             marginBottom: '50px',
           }}
         >
-          <Pagination count={totalPages} page={page} color="primary" onChange={handlePageChange} />
+          {page && <Pagination count={totalPages} page={page} color="primary" onChange={handlePageChange} />}
         </Grid>
       </Container>
 

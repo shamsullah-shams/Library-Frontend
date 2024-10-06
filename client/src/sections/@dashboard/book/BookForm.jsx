@@ -1,6 +1,33 @@
-import { Box, Button, Container, Modal, Stack, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  Stack,
+  Grid,
+  TextField,
+  Typography,
+  FormControl,
+} from '@mui/material';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import Iconify from '../../../components/iconify';
+
+// static design
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 800,
+  bgcolor: 'white',
+  borderRadius: '20px',
+  boxShadow: 16,
+  p: 2,
+};
 
 const BookForm = ({
   isUpdateForm,
@@ -13,18 +40,7 @@ const BookForm = ({
   setImage,
   setPDF,
 }) => {
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 800,
-    bgcolor: 'white',
-    borderRadius: '20px',
-    boxShadow: 16,
-    p: 2,
-  };
-
+  const categories = useSelector((state) => state.categories.categories);
   return (
     <Modal
       open={isModalOpen}
@@ -54,6 +70,30 @@ const BookForm = ({
               required
               onChange={(e) => setBook({ ...book, isbn: e.target.value })}
             />
+
+            <FormControl sx={{ m: 1 }}>
+              <InputLabel id="category-label">Category</InputLabel>
+              <Select
+                labelId="category-label"
+                id="category"
+                label="Category"
+                value={book.categoryId || ''}
+                onChange={(e) => {
+                  const selectedCategory = categories.find((category) => category.id === e.target.value);
+                  setBook({
+                    ...book,
+                    categoryId: selectedCategory.id,
+                    categoryName: selectedCategory.title,
+                  });
+                }}
+              >
+                {categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
             <TextField
               name="summary"

@@ -13,7 +13,7 @@ export const fetchCategories = () => {
       const data = response.data.map((item) => {
         return {
           ...item,
-          path: `category/${item.id}`,
+          path: `/category/${item.id}`,
         };
       });
       dispatch(categoryActions.setCategories(data));

@@ -48,6 +48,10 @@ export default function Router() {
       element: <BookPage2 />,
     },
     {
+      path: 'category/:categoryId',
+      element: <BookPage2 />,
+    },
+    {
       path: 'login',
       element: <LoginPage />,
     },

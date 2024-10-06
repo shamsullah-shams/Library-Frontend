@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 
 import {
   Box,
-  Button,
   Card,
   CircularProgress,
   Container,
@@ -16,17 +15,20 @@ import {
   Popover,
   Stack,
   Typography,
+  InputBase,
 } from '@mui/material';
 import { Alert } from '@mui/lab';
+import { useParams } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
 import Label from '../../../components/label';
 import Iconify from '../../../components/iconify';
 import { apiUrl, routes } from '../../../constants';
+import Header from './Header';
+import Nav from './Nav';
 
-// ----------------------------------------------------------------------
+const APP_BAR_MOBILE = 64;
+const APP_BAR_DESKTOP = 92;
 
 const StyledBookImage = styled('img')({
   top: 0,
@@ -75,7 +77,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const StyledRoot = styled('div')({
+  display: 'flex',
+  minHeight: '100%',
+  overflow: 'hidden',
+});
+
+const Main = styled('div')(({ theme }) => ({
+  flexGrow: 1,
+  overflow: 'auto',
+  minHeight: '100%',
+  paddingTop: APP_BAR_MOBILE + 24,
+  paddingBottom: theme.spacing(10),
+  [theme.breakpoints.up('lg')]: {
+    paddingTop: APP_BAR_DESKTOP + 24,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
+}));
+
 const BookPage = () => {
+  const { categoryId } = useParams();
   const [books, setBooks] = useState([]);
   const [selectedBookId, setSelectedBookId] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(null);
@@ -121,7 +143,7 @@ const BookPage = () => {
 
   const getAllBooks = () => {
     axios
-      .get(apiUrl(routes.BOOK), {})
+      .get(apiUrl(routes.BOOK), { params: { categoryId } })
       .then((response) => {
         // handle success
         const data = response.data;
@@ -147,7 +169,7 @@ const BookPage = () => {
   // Load data on initial page load
   useEffect(() => {
     getAllBooks();
-  }, []);
+  }, [categoryId]);
 
   const previewBook = () => {
     const selectedBook = books.find((element) => element.id === selectedBookId);
@@ -164,7 +186,8 @@ const BookPage = () => {
     axios
       .get(apiUrl(routes.BOOK), {
         params: {
-          page: value, // Send the page number as a query parameter
+          page: value,
+          categoryId,
         },
       })
       .then((response) => {
@@ -185,22 +208,12 @@ const BookPage = () => {
   };
 
   return (
-    <>
+    <Layout>
       <Helmet>
         <title> Books </title>
       </Helmet>
 
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" marginTop={5}>
-          <Typography variant="h3" sx={{ mb: 5 }}>
-            <img src="../../../assets/libraryLogo.png" alt="logo" width={130} />
-          </Typography>
-          <Typography variant="h3" sx={{ mb: 5 }}>
-            <Link to="/login" className="header-login">
-              <Button variant="outlined">Login</Button>
-            </Link>
-          </Typography>
-        </Stack>
         <Container sx={{ mb: 5 }}>
           <Search>
             <SearchIconWrapper>
@@ -311,7 +324,19 @@ const BookPage = () => {
           Preview
         </MenuItem>
       </Popover>
-    </>
+    </Layout>
+  );
+};
+
+const Layout = (props) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <StyledRoot>
+      <Header onOpenNav={() => setOpen(true)} />
+      <Nav openNav={open} onCloseNav={() => setOpen(false)} />
+      <Main>{props.children}</Main>
+    </StyledRoot>
   );
 };
 
