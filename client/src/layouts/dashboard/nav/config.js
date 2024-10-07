@@ -1,4 +1,4 @@
-import { FiBookOpen, FiCheckCircle, FiUsers, FiDownloadCloud, FiChevronDown } from 'react-icons/fi';
+import { FiBookOpen, FiCheckCircle, FiUsers, FiDownloadCloud, FiChevronDown, FiCheck } from 'react-icons/fi';
 
 const navConfig = [
   {
@@ -22,36 +22,13 @@ const navConfig = [
     icon: <FiUsers />,
   },
   {
+    title: 'Manage Categories',
+    path: '/manageCategory',
+    icon: <FiCheck />,
+  },
+  {
     title: 'Backup',
     path: '/backup',
-    icon: <FiDownloadCloud />,
-  },
-];
-
-export const innerConfig = [
-  {
-    title: 'Computer Science',
-    path: '/books/cs',
-    icon: <FiBookOpen />,
-  },
-  {
-    title: 'Medical',
-    path: '/books/md',
-    icon: <FiChevronDown />,
-  },
-  {
-    title: 'Engineering',
-    path: '/books/eng',
-    icon: <FiCheckCircle />,
-  },
-  {
-    title: 'Public Administration',
-    path: '/books/pb',
-    icon: <FiUsers />,
-  },
-  {
-    title: 'Journalism',
-    path: '/books/jrm',
     icon: <FiDownloadCloud />,
   },
 ];

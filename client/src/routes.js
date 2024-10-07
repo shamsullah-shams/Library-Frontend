@@ -8,6 +8,7 @@ import UsersPage from './sections/@dashboard/user/UserPage';
 import { useAuth } from './hooks/useAuth';
 import BookPage2 from './sections/@dashboard/gBooks';
 import Backup from './sections/@dashboard/backup/BackupPage';
+import CategoryPage from './sections/@dashboard/category/CategoryPage';
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +27,7 @@ export default function Router() {
         { path: 'borrowals', element: <BorrowalPage /> },
         { path: 'users', element: <UsersPage /> },
         { path: 'backup', element: <Backup /> },
+        { path: 'manageCategory', element: <CategoryPage /> },
       ],
     },
     {

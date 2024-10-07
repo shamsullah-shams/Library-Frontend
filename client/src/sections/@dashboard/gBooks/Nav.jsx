@@ -142,7 +142,7 @@ const Nav = ({ openNav, onCloseNav }) => {
     >
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex', justifyContent: 'center' }}>
         <Typography variant="h3" sx={{ mb: 5 }} textAlign="center">
-          <img src="../../../assets/libraryLogo.png" alt="logo" width={100} />
+          <img src="../../../assets/libraryLogo.png" alt="logo" width={130} />
         </Typography>
       </Box>
       <NavSection data={navConfig} innerData={categories} collapse={collapse} setCollapse={setCollapse} />
