@@ -109,7 +109,6 @@ const UserPage = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         toast.success('User added');
         handleCloseModal();
         getAllUsers();
@@ -128,7 +127,6 @@ const UserPage = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         toast.success('User updated');
         handleCloseModal();
         handleCloseMenu();

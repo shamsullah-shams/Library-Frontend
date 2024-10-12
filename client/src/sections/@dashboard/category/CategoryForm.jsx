@@ -14,8 +14,6 @@ const CategoryForm = ({
 }) => {
   const { user, tokens } = useAuth();
 
-  console.log({ 'category from model': category });
-
   const style = {
     position: 'absolute',
     top: '50%',

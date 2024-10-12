@@ -12,7 +12,7 @@ export default function AccountPopover() {
   const logoutUser = () => {
     handleClose();
     axios
-      .post(`http://localhost:5000/api/auth/logout`, { refreshToken: tokens.refresh.token })
+      .post(`/api/auth/logout`, { refreshToken: tokens.refresh.token })
       .then((response) => {
         logout();
       })

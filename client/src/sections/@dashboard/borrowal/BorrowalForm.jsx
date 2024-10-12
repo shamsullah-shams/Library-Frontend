@@ -14,8 +14,6 @@ const BorrowalForm = ({
 }) => {
   const { user, tokens } = useAuth();
 
-  console.log({ 'borrowal from model': borrowal });
-
   const style = {
     position: 'absolute',
     top: '50%',

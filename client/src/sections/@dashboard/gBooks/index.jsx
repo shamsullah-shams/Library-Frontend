@@ -174,7 +174,7 @@ const BookPage = () => {
   const previewBook = () => {
     const selectedBook = books.find((element) => element.id === selectedBookId);
     if (selectedBook) {
-      window.open(`http://localhost:5000/images/${selectedBook?.pdf}`, '_blank');
+      window.open(`/images/${selectedBook?.pdf}`, '_blank');
     } else {
       alert('something went wrong');
     }
@@ -237,7 +237,7 @@ const BookPage = () => {
         ) : books.length > 0 ? (
           <Grid container spacing={4}>
             {books.map((book) => (
-              <Grid key={book._id} item xs={12} sm={6} md={4}>
+              <Grid key={book._id} item xs={4} sm={6} md={4}>
                 <Card>
                   <Box sx={{ pt: '80%', position: 'relative' }}>
                     <Label
@@ -266,7 +266,7 @@ const BookPage = () => {
                       </IconButton>
                     </Label>
 
-                    <StyledBookImage alt={book.name} src={`http://localhost:5000/images/${book.image}`} />
+                    <StyledBookImage alt={book.name} src={`/images/${book.image}`} />
                   </Box>
 
                   <Stack spacing={1} sx={{ p: 2 }}>

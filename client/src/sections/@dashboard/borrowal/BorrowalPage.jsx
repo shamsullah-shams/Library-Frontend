@@ -105,7 +105,6 @@ const BorrowalPage = () => {
       })
       .then((response) => {
         toast.success('Borrowal added');
-        console.log(response.data);
         handleCloseModal();
         getAllBorrowals();
         clearForm();

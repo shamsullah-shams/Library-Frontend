@@ -41,7 +41,7 @@ export default function LoginPage() {
       toast.error('Please enter email and password');
     } else {
       axios
-        .post(`http://localhost:5000/api/auth/login`, { email, password })
+        .post(`/api/auth/login`, { email, password })
         .then((response) => {
           // handle success
           if (response.status === 200) {
@@ -72,7 +72,7 @@ export default function LoginPage() {
           }}
         />
 
-        <Container maxWidth="sm">
+        <Container maxWidth="sm" sx={{ marginTop: '80px' }}>
           <StyledContent>
             <Typography
               variant="h4"
