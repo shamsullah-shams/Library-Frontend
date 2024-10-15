@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
@@ -31,6 +32,29 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 export default function LoginPage() {
   const { login, user } = useAuth();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [requestCount, setRequestCount] = useState(0);
+
+  useEffect(() => {
+    // Load previous state if it exists
+    const storedTime = localStorage.getItem('disableTime');
+    if (storedTime) {
+      const diff = Date.now() - parseInt(storedTime, 10);
+      if (diff < 15 * 60 * 1000) {
+        setIsButtonDisabled(true);
+        setTimer(Math.ceil((15 * 60 * 1000 - diff) / 1000));
+        const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
+
+        // Automatically re-enable after timer ends
+        setTimeout(() => {
+          clearInterval(interval);
+          setIsButtonDisabled(false);
+          localStorage.removeItem('disableTime');
+        }, 15 * 60 * 1000 - diff);
+      }
+    }
+  }, []);
 
   if (user) {
     return <Navigate to={'/books'} replace />;
@@ -50,9 +74,22 @@ export default function LoginPage() {
           }
         })
         .catch((error) => {
-          // handle error
           toast.error(error.response.data.message);
-          console.log(error);
+
+          if (error.response.status === 429) {
+            setIsButtonDisabled(true);
+            setTimer(15 * 60);
+            localStorage.setItem('disableTime', Date.now().toString());
+
+            const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
+
+            setTimeout(() => {
+              clearInterval(interval);
+              setIsButtonDisabled(false);
+              setRequestCount(0);
+              localStorage.removeItem('disableTime');
+            }, 15 * 60 * 1000);
+          }
         });
     }
   };
@@ -87,7 +124,12 @@ export default function LoginPage() {
               Sign in
             </Typography>
 
-            <LoginForm loginUser={loginUser} />
+            <div style={{ marginTop: '20px', marginBottom: '20px', fontSize: '20px', textAlign: 'center' }}>
+              {isButtonDisabled
+                ? `To Many requests. Try again in ${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, '0')}`
+                : ''}
+            </div>
+            <LoginForm loginUser={loginUser} isDisabled={isButtonDisabled} />
           </StyledContent>
         </Container>
       </StyledRoot>

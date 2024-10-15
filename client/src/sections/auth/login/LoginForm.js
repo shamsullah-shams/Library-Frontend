@@ -7,7 +7,7 @@ import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
-const LoginForm = ({ loginUser }) => {
+const LoginForm = ({ loginUser, isDisabled }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -58,6 +58,7 @@ const LoginForm = ({ loginUser }) => {
         size="large"
         type="submit"
         variant="contained"
+        disabled={isDisabled}
         onClick={() => loginUser(email, password)}
       >
         Login

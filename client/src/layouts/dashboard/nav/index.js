@@ -13,7 +13,7 @@ import Logo from '../../../components/logo';
 import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
-import navConfig, { innerConfig } from './config';
+import navConfig from './config';
 import { useAuth } from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
