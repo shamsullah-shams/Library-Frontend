@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { IconButton, InputAdornment, Stack, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ const LoginForm = ({ loginUser, isDisabled }) => {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
                 </IconButton>
               </InputAdornment>
             ),

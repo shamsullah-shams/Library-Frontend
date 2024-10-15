@@ -29,8 +29,8 @@ function NavSection({ data = [], innerData = [], ...other }) {
   return (
     <Box {...other}>
       <List disablePadding sx={{ p: 1 }}>
-        {data.map((item) => (
-          <>
+        {data.map((item, index) => (
+          <React.Fragment key={index}>
             <NavButton key={item.title} item={item} collapse={collapse} setCollapse={setCollapse} />
             {collapse && (
               <>
@@ -39,7 +39,7 @@ function NavSection({ data = [], innerData = [], ...other }) {
                 })}
               </>
             )}
-          </>
+          </React.Fragment>
         ))}
       </List>
     </Box>

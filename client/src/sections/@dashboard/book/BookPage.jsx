@@ -19,15 +19,17 @@ import {
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { Alert } from '@mui/lab';
+import { FiEdit3, FiEye } from 'react-icons/fi';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import { Delete } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useAuth } from '../../../hooks/useAuth';
 import Label from '../../../components/label';
 import BookDialog from './BookDialog';
 import BookForm from './BookForm';
 import Iconify from '../../../components/iconify';
-import { apiUrl, methods, routes } from '../../../constants';
+import { apiUrl, routes } from '../../../constants';
 
 // ----------------------------------------------------------------------
 
@@ -450,7 +452,7 @@ const BookPage = () => {
         }}
       >
         <MenuItem onClick={previewBook}>
-          <Iconify icon={'eva:eye-outline'} sx={{ mr: 2 }} />
+          <FiEye style={{ marginRight: 2 }} size={20} />
           Preview
         </MenuItem>
         <MenuItem
@@ -461,12 +463,12 @@ const BookPage = () => {
             handleOpenModal();
           }}
         >
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+          <FiEdit3 style={{ marginRight: 2 }} size={20} />
           Edit
         </MenuItem>
 
         <MenuItem sx={{ color: 'error.main' }} onClick={handleOpenDialog}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
+          <Delete style={{ marginRight: 2 }} size={20} />
           Delete
         </MenuItem>
       </Popover>

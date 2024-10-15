@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Button, IconButton, Stack, AppBar, Toolbar } from '@mui/material';
+import { MenuOpen } from '@mui/icons-material';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { bgBlur } from '../../../utils/cssStyles';
-import Iconify from '../../../components/iconify';
 
 const NAV_WIDTH = 280;
 const HEADER_MOBILE = 64;
@@ -37,7 +37,7 @@ const Header = ({ onOpenNav }) => {
             display: { lg: 'none' },
           }}
         >
-          <Iconify icon="eva:menu-2-fill" />
+          <MenuOpen />
         </IconButton>
 
         <Box sx={{ flexGrow: 1 }} />

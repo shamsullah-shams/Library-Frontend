@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { Alert } from '@mui/lab';
 import { useParams } from 'react-router-dom';
+import { FiEye } from 'react-icons/fi';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import Label from '../../../components/label';
@@ -320,7 +321,7 @@ const BookPage = () => {
         }}
       >
         <MenuItem onClick={previewBook}>
-          <Iconify icon={'eva:eye-outline'} sx={{ mr: 2 }} />
+          <FiEye size={20} style={{ marginRight: '12px' }} />
           Preview
         </MenuItem>
       </Popover>

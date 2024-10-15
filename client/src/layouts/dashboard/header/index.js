@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
 // @mui
-import {styled} from '@mui/material/styles';
-import {AppBar, Box, IconButton, Stack, Toolbar} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { AppBar, Box, IconButton, Stack, Toolbar } from '@mui/material';
+import { MenuOpen } from '@mui/icons-material';
 // utils
-import {bgBlur} from '../../../utils/cssStyles';
-// components
-import Iconify from '../../../components/iconify';
-//
+import { bgBlur } from '../../../utils/cssStyles';
 import AccountPopover from './AccountPopover';
 
 // ----------------------------------------------------------------------
@@ -39,7 +37,6 @@ Header.propTypes = {
   onOpenNav: PropTypes.func,
 };
 
-
 export default function Header({ onOpenNav }) {
   return (
     <StyledRoot>
@@ -52,7 +49,7 @@ export default function Header({ onOpenNav }) {
             display: { lg: 'none' },
           }}
         >
-          <Iconify icon="eva:menu-2-fill" />
+          <MenuOpen />
         </IconButton>
 
         <Box sx={{ flexGrow: 1 }} />
