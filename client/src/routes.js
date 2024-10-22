@@ -9,6 +9,7 @@ import { useAuth } from './hooks/useAuth';
 import BookPage2 from './sections/@dashboard/gBooks';
 import Backup from './sections/@dashboard/backup/BackupPage';
 import CategoryPage from './sections/@dashboard/category/CategoryPage';
+import LandingPage from './pages/intex';
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +46,10 @@ export default function Router() {
   ]);
 
   const guestRoutes = useRoutes([
+    {
+      path: '/',
+      element: <LandingPage />,
+    },
     {
       path: 'student/books',
       element: <BookPage2 />,

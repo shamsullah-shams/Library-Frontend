@@ -238,7 +238,7 @@ const BookPage = () => {
         ) : books.length > 0 ? (
           <Grid container spacing={4}>
             {books.map((book) => (
-              <Grid key={book._id} item xs={4} sm={6} md={4}>
+              <Grid key={book._id} item xs={12} sm={6} md={4}>
                 <Card>
                   <Box sx={{ pt: '80%', position: 'relative' }}>
                     <Label
