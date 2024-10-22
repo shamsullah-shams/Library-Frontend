@@ -22,8 +22,8 @@ import { useParams } from 'react-router-dom';
 import { FiEye } from 'react-icons/fi';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
+import { MoreVert } from '@mui/icons-material';
 import Label from '../../../components/label';
-import Iconify from '../../../components/iconify';
 import { apiUrl, routes } from '../../../constants';
 import Header from './Header';
 import Nav from './Nav';
@@ -263,7 +263,7 @@ const BookPage = () => {
                           handleOpenMenu(e);
                         }}
                       >
-                        <Iconify icon={'eva:more-vertical-fill'} />
+                        <MoreVert />
                       </IconButton>
                     </Label>
 

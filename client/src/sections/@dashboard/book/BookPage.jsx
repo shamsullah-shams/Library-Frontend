@@ -22,7 +22,7 @@ import { Alert } from '@mui/lab';
 import { FiEdit3, FiEye } from 'react-icons/fi';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { Delete } from '@mui/icons-material';
+import { Delete, MoreVert } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useAuth } from '../../../hooks/useAuth';
 import Label from '../../../components/label';
@@ -395,7 +395,7 @@ const BookPage = () => {
                             handleOpenMenu(e);
                           }}
                         >
-                          <Iconify icon={'eva:more-vertical-fill'} />
+                          <MoreVert />
                         </IconButton>
                       </Label>
                     )}
