@@ -14,6 +14,7 @@ import {
   CardHeader,
   FormControlLabel,
 } from '@mui/material';
+import { MoreVert } from '@mui/icons-material';
 // components
 import Iconify from '../../../components/iconify';
 
@@ -117,7 +118,7 @@ function TaskItem({ task, checked, onChange }) {
       />
 
       <IconButton size="large" color="inherit" sx={{ opacity: 0.48 }} onClick={handleOpenMenu}>
-        <Iconify icon={'eva:more-vertical-fill'} />
+        <MoreVert />
       </IconButton>
 
       <Popover

@@ -2,14 +2,11 @@ import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
 import { Alert } from '@mui/lab';
 import {
   Button,
   Card,
-  CircularProgress,
   Container,
-  Grid,
   IconButton,
   MenuItem,
   Popover,
@@ -23,6 +20,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { MoreVert } from '@mui/icons-material';
 import { useAuth } from '../../../hooks/useAuth';
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
@@ -221,7 +219,7 @@ const CategoryPage = () => {
                               handleOpenMenu(e);
                             }}
                           >
-                            <Iconify icon={'eva:more-vertical-fill'} />
+                            <MoreVert />
                           </IconButton>
                         </TableCell>
                       </TableRow>

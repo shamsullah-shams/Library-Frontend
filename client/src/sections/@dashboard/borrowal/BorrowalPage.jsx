@@ -22,6 +22,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { MoreVert } from '@mui/icons-material';
 import { useAuth } from '../../../hooks/useAuth';
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
@@ -271,7 +272,7 @@ const BorrowalPage = () => {
                                 handleOpenMenu(e);
                               }}
                             >
-                              <Iconify icon={'eva:more-vertical-fill'} />
+                              <MoreVert />
                             </IconButton>
                           </TableCell>
                         </TableRow>

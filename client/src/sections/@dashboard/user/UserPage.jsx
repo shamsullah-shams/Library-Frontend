@@ -23,6 +23,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { MoreVert } from '@mui/icons-material';
 import { useAuth } from '../../../hooks/useAuth';
 
 import Iconify from '../../../components/iconify';
@@ -288,7 +289,7 @@ const UserPage = () => {
                                 handleOpenMenu(e);
                               }}
                             >
-                              <Iconify icon={'eva:more-vertical-fill'} />
+                              <MoreVert />
                             </IconButton>
                           </TableCell>
                         </TableRow>
